@@ -1,0 +1,42 @@
+
+/* ---- grid ---- */ 
+.grid {
+
+  max-width: 1200px;
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid-item {
+  width: 140px;
+  float: left;
+}
+
+#topics-masonry {
+  padding: 0;
+}
+
+.card {
+  text-decoration: none;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}

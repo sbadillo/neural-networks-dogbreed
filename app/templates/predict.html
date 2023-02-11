@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Breed predictor</title>
+
+  <link href="/static/main.css" rel="stylesheet">
+
+  <!-- bootstrap css -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+  <!-- masonry js -->
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+
+</head>
+
+<body>
+  <!-- page header -->
+  <div class="container-sm mt-4">
+    <div class="row text-center pt-3">
+      <h1>Breed finder for dogs</h1>
+      <p class="lead">... and humans</p>
+    </div>
+  </div>
+
+  <!-- results section -->
+  <div class="container-sm text-center" id="result-section">
+
+    <div class="row text-center pt-4">
+    
+      {% if is_dog  %}
+      <h4>Doggo 🐕 found</h4>
+      {% endif %}
+
+      {% if is_human %}
+      <h4>⚠️ human 👩👨 detected</h4>
+      {% endif %}
+
+    </div>
+
+    <div class="row justify-content-md-center my-4">
+      <div class="col-md-8">
+        <img class="img-fluid shadow rounded-3 border border-success" src="{{ user_img_path }}">
+      </div>
+    </div>
+
+    <div class="row justify-content-md-center pt-4">
+
+      <h2><img class="img-fluid w-25 p-1" src="/static/doggo.png" alt="">Looks like a <mark>{{ breed.replace("_", " ") }}!</mark></h2>
+    </div>
+
+  </div>
+
+  <!-- example grid section -->
+  <div class="container-sm my-4" id="example-section">
+
+    <div class="row justify-content-md-center">
+      <p class="lead text-center align-self-center">See other {{ breed.replace("_", " ") }} examples 👇</p>
+    </div>
+
+    <div class="row" id="masonry-row">
+      <div class="grid mx-auto">
+        {% for file in examples %}
+        <div class="grid-item my-1">
+          <img class="img-fluid rounded-3 shadow border" src="{{ file }}">
+        </div>
+        {% endfor %}
+        <!-- search more -->
+        <a class="card border-info text-center grid-item my-1 shadow"
+          href="https://duckduckgo.com/?q={{ breed }}&iax=images&ia=images">
+          <div class="card-body">
+            <h6 class="card-title">🔍 Moar !</h6>
+            <p class="card-text">Search online for more images.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!--  go back button -->
+    <div class="row justify-content-md-center my-5" id="go-back-section">
+      <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-lg col-md-3" role="button"
+        aria-pressed="true">⬅️ Back</a>
+    </div>
+
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+    integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+    crossorigin="anonymous"></script>
+
+  <!-- masonry js -->
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+
+  <script>
+    var grid = document.querySelector('.grid');
+    var msnry = new Masonry(grid, {
+      // options
+      itemSelector: '.grid-item',
+      columnWidth: 150,
+      isFitWidth: true,
+      gutter: 10
+    });
+
+    imagesLoaded(grid).on('progress', function () {
+      // layout Masonry after each image loads
+      msnry.layout();
+    });
+
+
+  </script>
+
+</body>
+
+</html>
