@@ -73,6 +73,11 @@ To do so using using conda run:
     $ conda config --add channels conda-forge
     $ conda create --name dog-env --file requirements-conda.txt
 
+
+METHOD 2 :
+    $ conda env create -f environment.yml
+
+
 Or (alternatively)  using venv & pip
 
     $ python3 -m venv env
