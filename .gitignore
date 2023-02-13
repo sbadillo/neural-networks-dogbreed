@@ -3,4 +3,4 @@ helpers.ipynb
 /uploads
 
 # keep this one
-!/uploads/.gitkeep
+!/app/uploads/.gitkeep
