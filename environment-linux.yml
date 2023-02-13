@@ -171,4 +171,3 @@ dependencies:
   - zipp=3.13.0
   - zlib=1.2.13
   - zstd=1.5.2
-prefix: /home/sbadillo/miniconda3/envs/dog-env

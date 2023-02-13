@@ -4,11 +4,9 @@ channels:
   - conda-forge
 dependencies:
   - python=3.10
-  - waitress
-  - opencv
-  - flask
-  - dlib
-  - imutils
-  - keras
   - tensorflow
-
+  - opencv
+  - imutils
+  - flask
+  - waitress
+  - dlib
