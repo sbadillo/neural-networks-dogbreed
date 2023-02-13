@@ -66,7 +66,7 @@ Clone this repository, then cd into it
 
 It is recommended to set-up a python virtual environment using the `conda` package manager from the Anaconda distribution ([available here](https://www.anaconda.com/products/distribution)).
 
-Run this command from a conda-enabled shell. This will create a new environment called **`dog-env`** and install all dependencies:
+Run this command from a conda-enabled shell. This will create a new environment called **`dog-env`** and install all dependencies.
 
     $ conda env create -f environment.yml
 

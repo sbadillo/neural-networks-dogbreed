@@ -11,23 +11,23 @@ __version__ = "1.0.0"
 __author__ = "Sergio Badillo"
 
 import os
-
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-
 from flask import Flask
-from flask import (
+from flask import (  # pylint: disable=unused-import
     render_template,
     url_for,
     request,
     abort,
     send_from_directory,
 )
-
 from werkzeug.utils import secure_filename
 import predict
 
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # disable tensorflow compile warnings
+
+
 UPLOAD_FOLDER = "uploads"
-UPLOAD_EXTENSIONS = ["jpg", "jpeg", "png", "gif"]
+UPLOAD_EXTENSIONS = ["jpg", "jpeg", "png", "gif", "webp"]
 MAX_CONTENT_LENGTH = 1024 * 1024 * 14  # 14 MB
 EXAMPLE_DIR = "./static/example_images"
 
@@ -39,7 +39,7 @@ app.config["UPLOAD_EXTENSIONS"] = UPLOAD_EXTENSIONS
 
 
 def allowed_file(filename):
-    """_summary_
+    """Helper function returns whether a file is allowed or not.
     Args:
         filename (string): name of file
     Returns:
@@ -55,7 +55,7 @@ def clean_dir(directory):
     """Erases user images in directory.
 
     Args:
-        directory (str): directory path
+        directory (str): directory path.
     """
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
@@ -68,7 +68,8 @@ def clean_dir(directory):
 
 
 def find_examples(breed):
-    """finds the directory of example images for breed.
+    """Finds and returns the path to a directory containing
+    example dog images for breed.
 
     Args:
         breed (str): dog breed, according to Imagenet labels
@@ -81,17 +82,15 @@ def find_examples(breed):
     return [os.path.join(dir_breed, i) for i in os.listdir(dir_breed)]
 
 
-# index webpage receives user input for model
 @app.route("/")
 def index():
-    """Render the app index page.
+    """Render the app's index page.
 
     Returns:
-        flask's render_template instance of master.html
+        flask's render_template instance of index.html
     """
 
-    # this will clean all files present in the uploads folder
-    clean_dir(UPLOAD_FOLDER)
+    clean_dir(UPLOAD_FOLDER)  # clean all user images upon page load
 
     return render_template(
         "index.html",
@@ -100,7 +99,17 @@ def index():
 
 @app.route("/predict", methods=["GET", "POST"])
 def call_predict():
-    """summary"""
+    """Calls for a prediction on posted image file.
+
+    This functions digests the POST request and intercepts the uploaded file.
+    If the file is safely secured io disk, the predict.predict_final() function is called.
+    The returned html rendered page depend on the results of the prediction:
+        - predict.html for succesful human or dog detections
+        - no_predict.html for unsuccesful detections.
+
+    Returns:
+        render: rendered html-jinja page depending on output
+    """
 
     if request.method == "POST":
         file = request.files["file"]
@@ -151,22 +160,27 @@ def upload(filename):
 
 @app.errorhandler(413)
 def too_large(error):
-    """helper"""
-    return "File is too large", 413
+    """returns user message for error case"""
+    print(error)
+    return "File is too large (Max file size 14 MB).", 413
 
 
 @app.errorhandler(400)
 def invalid_type(error):
-    """helper"""
-    return "Not a valid image file", 400
+    """returns user message for error case"""
+    print(error)
+    return "Not a valid image file, please try again.", 400
 
 
 def main():
-    """runs app"""
-    # app.run()     # run app with flask
+    """Runs the application's WSGI server on local:8080
 
-    # using Waitress as WSGI production server
-    print("🏃‍♂️Starting production server on http://127.0.0.1:8080")
+    NOTE: to start debug server with flask run:
+        $ flask --debug --app=run.py run --host=0.0.0.0
+    """
+
+    # start waitress production server
+    print("🐕🏃Starting production server on http://127.0.0.1:8080")
     waitress.serve(app, host="0.0.0.0", port=8080)
 
 

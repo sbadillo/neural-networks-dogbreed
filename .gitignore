@@ -1,2 +1,6 @@
 .vscode/
 helpers.ipynb
+/uploads
+
+# keep this one
+!/uploads/.gitkeep
