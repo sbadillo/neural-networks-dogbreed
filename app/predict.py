@@ -3,7 +3,7 @@
 
 """
 Module providing neural network implementation functions for
-dog breed predictions, dog detection and human detection.
+dog breed prediction, dog detection and human detection.
 """
 
 __version__ = "1.0.0"
@@ -11,12 +11,14 @@ __author__ = "Sergio Badillo"
 
 
 import numpy
-import cv2
+import cv2  # pylint: disable=c-extension-no-member
 import imutils
 from imutils import face_utils
 import keras
 from keras.applications import xception, resnet
-from dlib import cnn_face_detection_model_v1, get_frontal_face_detector
+from dlib import cnn_face_detection_model_v1  # pylint: disable=no-name-in-module
+from dlib import get_frontal_face_detector  # pylint: disable=no-name-in-module
+
 import dog_names
 
 
@@ -36,17 +38,23 @@ def path_to_tensor(img_path):
 
 
 def find_human(img, algorithm="dlib-cnn"):
-    """Uses CNN-MMOD algorithm to detect human faces in image.
-    Returns face position if a human face is found, otherwise returns False
+    """Detects human faces in an image.
+    Returns face position if a human face is found, otherwise returns None.
     Extracts only first face for simplicity.
 
     Args:
         img (numpy.array): image numpy array.
             If path is provided, will try to generate an array
-        algorithm (str, optional): _description_. Defaults to "dlib-cnn".
+        algorithm (str, optional): Specifies model to use for face detection.
+            Possible values are are "dlib-cnn" [default] for dlib's convolutional
+            neural network implementation (see dlib.cnn_face_detection_model_v1)
+            or "hog" for Dlib HoG via the function (see dlib.get_frontal_face_detector)
+            More info at http://dlib.net/python/index.html.
 
     Returns:
-        _type_: _description_
+        tuple: if face was detected returns tuple (face, confidence)
+            where face includes coordonates of face rectangle.
+        None : if no face detected
     """
 
     # transform to ndarray if needed
@@ -55,9 +63,7 @@ def find_human(img, algorithm="dlib-cnn"):
             print("trying to convert")
             img = cv2.imread(img)
         except TypeError():
-            print(
-                "Oops!  That was not a valid file. Please check that you are providing an image in array form."
-            )
+            print("Not a valid file. Are providing an image in array form.")
 
     if algorithm == "dlib-cnn":
         # more accurate, but slow, this detector is used by default
@@ -70,8 +76,8 @@ def find_human(img, algorithm="dlib-cnn"):
             face = face_utils.rect_to_bb(rects[0].rect)
             confidence = rects[0].confidence
             return face, confidence
-        else:
-            return None
+
+        return None
 
     if algorithm == "hog":
         # algorithm HoG, this one is faster but has higher error.
@@ -90,15 +96,22 @@ def find_human(img, algorithm="dlib-cnn"):
 
 
 def find_dog(img_path):
-    """Returns True if a dog is detected in the image stored at img_path."""
+    """Returns True if a dog is detected in the image stored at img_path.
+
+    Args:
+        img_path (str): image filepath
+
+    Returns:
+        boolean : dog is found or not
+    """
 
     img = resnet.preprocess_input(path_to_tensor(img_path))
 
     # define ResNet50 model
-    ResNet50_model = resnet.ResNet50(weights="imagenet")
+    resnet50_model = resnet.ResNet50(weights="imagenet")
 
     # predict
-    prediction = numpy.argmax(ResNet50_model.predict(img, verbose=0))
+    prediction = numpy.argmax(resnet50_model.predict(img, verbose=0))
 
     return (prediction <= 268) & (prediction >= 151)
 
@@ -221,16 +234,6 @@ def predict_final(img_path):
 
         return (results, img_arr)
 
-    # elif results["is_human"] and not results['is_dog']:
-    #     print("Human 👩👨detected !")
-    #     img_arr = draw_bow(human_pos[0], img_arr, text="human !?", color=HUMAN_COLOR)
-    #     results["breed"] = find_dogbreed(img_path)
-    #     print(f"Anyway, he/she looks like a {results['breed']}.")
-
-    # elif is_dog and results["is_human"]:
-    #     print("❌ Not sure if I see a a dog or a human!, predicting breed anyway !")
-
-    # fallback : not dog, neither dog
+    # fallback : not dog, not human
     print("❌ I wasn't able to find any faces in the picture :'(")
-
     return (results, img_arr)
