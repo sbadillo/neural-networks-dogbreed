@@ -52,7 +52,7 @@ def allowed_file(filename):
 
 
 def clean_dir(directory):
-    """Erases all content in directory.
+    """Erases user images in directory.
 
     Args:
         directory (str): directory path
@@ -60,10 +60,9 @@ def clean_dir(directory):
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
         try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
+            if "user_img" in filename:
                 os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
+
         except KeyError as ex:
             print(f"Failed to delete {file_path}. Reason: {ex}")
 
@@ -105,12 +104,6 @@ def call_predict():
 
     if request.method == "POST":
         file = request.files["file"]
-
-        # # keep image in memory mode
-        # in_memory_file = io.BytesIO()
-        # f.save(in_memory_file)
-        # data = np.fromstring(in_memory_file.getvalue(), dtype=np.uint8)
-        # img = cv2.imdecode(data, 1)
 
         # store image in a secure way to ./uploads
         filename = secure_filename(file.filename)
