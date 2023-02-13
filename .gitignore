@@ -1,6 +1,5 @@
 .vscode/
 helpers.ipynb
-/uploads
+app/uploads/user_img*
 
 # keep this one
-!/app/uploads/.gitkeep
