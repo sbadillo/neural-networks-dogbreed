@@ -45,7 +45,7 @@ TODO
 
 An application that predicts a dog's breed from a user-provided image by using artificial neural networks.
 
-![Capture](.\capture2.gif)
+![Capture](capture2.gif)
 
 ##  User interface
 The web app follows this simple user story: 
