@@ -1,5 +1,6 @@
 .vscode/
 helpers.ipynb
 app/uploads/user_img*
+app/__pycache__/*
 
 # keep this one
