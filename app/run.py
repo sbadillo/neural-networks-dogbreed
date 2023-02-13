@@ -11,8 +11,8 @@ __version__ = "1.0.0"
 __author__ = "Sergio Badillo"
 
 import os
-import shutil
-import cv2
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 from flask import Flask
 from flask import (

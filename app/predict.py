@@ -10,8 +10,6 @@ __version__ = "1.0.0"
 __author__ = "Sergio Badillo"
 
 
-import glob
-
 import numpy
 import cv2
 import imutils
@@ -192,10 +190,7 @@ def predict_final(img_path):
         "is_dog": False,
         "is_human": False,
         "breed": None,  # used for both dogs and humans lol
-        # "human_pos": None,
     }
-
-    # human_pos = None
 
     # import to np array and resize if size is exceeded.
     img_arr = cv2.imread(img_path)
