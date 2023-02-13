@@ -70,12 +70,13 @@ It is recommended to set-up a virtual environment before installing all dependen
 
 To do so using using conda run:
 
-    $ conda create --name dog-env --file --requirements.txt
+    $ conda config --add channels conda-forge
+    $ conda create --name dog-env --file requirements-conda.txt
 
 Or (alternatively)  using venv & pip
 
     $ python3 -m venv env
-    $ source env/bin/activate
+    $ source env/bin/activate   # this was ./env/Scripts/activate.bat on CDM windows
     $ pip install -r requirements.txt
 
 ## Running the app
