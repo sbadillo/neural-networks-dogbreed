@@ -166,7 +166,7 @@ def main():
     # app.run()     # run app with flask
 
     # using Waitress as WSGI production server
-    print("🏃‍♂️Starting production server on http://192.168.0.1:8000")
+    print("🏃‍♂️Starting production server on http://127.0.0.1:8080")
     waitress.serve(app, host="0.0.0.0", port=8080)
 
 
