@@ -1,13 +1,14 @@
-name: dog-env-win64
+name: dog-env
 channels:
   - defaults
+  - conda-forge
 dependencies:
   - python=3.10
-  - keras
-  - tensorflow
   - waitress
   - opencv
   - flask
   - dlib
   - imutils
-prefix: C:\Users\Dumpi\.conda\envs\dog-env-win64
+  - keras
+  - tensorflow
+
