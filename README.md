@@ -66,23 +66,15 @@ Clone this repository, then cd into it
     $ git clone https://github.com/sbadillo/neural-networks-dogbreed.git
     $ cd neural-networks-dogbreed
 
-It is recommended to set-up a virtual environment before installing all dependencies. 
+It is recommended to set-up a python virtual environment using the `conda` package manager from the Anaconda distribution ([available here](https://www.anaconda.com/products/distribution)).
 
-To do so using using conda run:
+Run this command from a conda-enabled shell to create a new environment called **`dog-env`** and install all dependencies:
 
-    $ conda config --add channels conda-forge
-    $ conda create --name dog-env --file requirements-conda.txt
-
-
-METHOD 2 :
     $ conda env create -f environment.yml
 
+Activate the newly created `dog-env` environment
 
-Or (alternatively)  using venv & pip
-
-    $ python3 -m venv env
-    $ source env/bin/activate   # this was ./env/Scripts/activate.bat on CDM windows
-    $ pip install -r requirements.txt
+    $ conda activate dog-env
 
 ## Running the app
 
