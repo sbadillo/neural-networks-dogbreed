@@ -139,53 +139,44 @@ This project is built on python3, the main libraries are described here.
 
 ## Project Definition and Motivation
 
-This project implements state-of-the art Convolutional Neural Network (CNN) models for object classification in images. Specifically, it aims to identify dogs and estimate the breed from a provided image.
+This project implements state-of-the art Convolutional Neural Network (CNN) models for object classification in images. Specifically, it aims to identify dogs and estimate the breed from a provided image. We build this application to demonstrate how modern deep learning techniques have evolved to solve common problems historically doable only by humans.
 
-The final product consists of two blocks:
+
+The final product can be divided into two sections:
 - A front-end user interface providing a simple workflow for the a user to upload an image.
 - An python back-end which implements machine learning algorithms, making all computations available to the frontend through a RESTful API.
 
 Limits:
 
-Even though our main purpose is that of breed identification for the human's best friend, we let the our implementation apply prediction directly to human faces as well. We expand then our algorithm to perform human face identification, adding a rather odd, but amusing twist to the user's experience.
+Even though our main purpose is that of breed identification **human's best friend**, we let the our implementation apply prediction directly to human faces as well. We expand then our algorithm to perform human face identification, adding a rather odd, but amusing twist to the user's experience.
 
-Having set up the limits of our problem we can split our detection section into three tasks
+Having set up the limits of our problem we can split our detection challenge into three main tasks
 
 1. Object detection for dogs.
 2. Object detection for humans (or human faces).
-3. Object detection specific for dogs breed. 
+3. Object detection for dog breed. 
 
 Motivation:
 
 Artificial vision have fascinated humans for millennia. Throughout history, we have dreamed of artificial forms that are capable of making autonomous decisions and drastically increase our productivity. 
 
-Up until contemporary history, visual object identification has been something that only intelligent life has been capable of doing. The human interest for vision systems continue today and have lead to an incredible research and advancement since the 60's. From autonomous driving to security applications, computer vision has become a key field of artificial intelligence. 
+Up until contemporary history, visual object identification has been something that only intelligent life has been capable of doing. The human interest for vision systems continue today and have lead to an incredible research and advancement since the 60's [1]. From autonomous driving to security applications, computer vision has become a key field of artificial intelligence. 
 
-    The earliest applications were pattern recognition systems for character recognition in office automation related tasks [2, 3].
-    [2] L. G. Roberts, Pattern Recognition With An Adaptive Network, in: Proc. IRE International Convention Record, 66–70, 1960.
-    [3] J. T. Tippett, D. A. Borkowitz, L. C. Clapp, C. J. Koester, A. J. Vanderburgh (Eds.), Optical and Electro-Optical Information Processing,
-    MIT Press, 1965.
+This project aims to demonstrate state-of-the-art techniques in computer vision. Applying modern models into a common-life task. Dog breed identification is difficult even in some cases for humans. We will see how computers are able to tackle this problem in a programatically and objective way.
 
 
-Object detection is a common computer vision task. As the name implies, the task is to identify instances of objects in digital images (or video frames).  
+## Analysis
+
+Object detection is a common computer vision task. As the name implies, the task is to identify instances of objects in digital images (or video frames). 
 
 Deep Learning
-To answer the question *what objects are where*, a computational model needs to run through the pixels of an image in order to identify and group patterns or "features". The extracted features allow the model to hypothesize over the presence of an object.
+To answer the question *what objects are where*, a computational model needs to run through pixels of an image in order to identify any patterns or "features". The extracted features allow the model to hypothesize over the presence of an object. We might call each extraction step as a single transformation. These transformations might also come in the form of image processing, such as color mapping and scaling.
 
-To achieve complex object detection, these algorithms attempt to create high-level abstractions in data (images), using architectures that support multiple and iterative transformations. We define this particular approach and algorithms as **Deep Learning**, characterized by their layered and often non-linear architecture.
+To achieve complex object detection, these computational models attempt to create high-level abstractions, using architectures that support multiple and iterative transformations. This particular approach is known as **Deep Learning**, characterized by a layered and often non-linear architecture.
 
 Data (images) must be expressed in matrix or tensor forms.
 
 
-
-
-The whole logic is often assembled in layers and it is common to mix in other techniques such as image processing.
-
-
-, such as 
-We explore modern deep learning techniques to solve common problems historically only doable for humans: Identifying a canine's breed.
-
-## Analysis
 
 ### Machine Learning techniques
 
@@ -206,6 +197,9 @@ ImageNet contains over 10 million URLs, each linking to an image containing an o
 
 ### Acknowledgements
 
+
+	[1] The earliest applications were pattern recognition systems for character recognition in office automation related tasks : L. G. Roberts, Pattern Recognition With An Adaptive Network, in: Proc. IRE International Convention Record, 66–70, 1960 and J. T. Tippett, D. A. Borkowitz, L. C. Clapp, C. J. Koester, A. J. Vanderburgh (Eds.), Optical and Electro-Optical Information Processing,
+	MIT Press, 1965.
 
 
 
