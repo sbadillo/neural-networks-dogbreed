@@ -34,11 +34,17 @@ TODO
   - [Main Libraries](#main-libraries)
 - [Details](#details)
   - [Project Definition and Motivation](#project-definition-and-motivation)
+    - [Motivation:](#motivation)
+    - [Project scope:](#project-scope)
   - [Analysis](#analysis)
-    - [Machine Learning techniques](#machine-learning-techniques)
-      - [**Dog vs Human differentiation**](#dog-vs-human-differentiation)
-      - [**Dog's breed prediction**](#dogs-breed-prediction)
-      - [**Imagenet**](#imagenet)
+    - [Deep Learning](#deep-learning)
+    - [**Dog vs Human differentiation**](#dog-vs-human-differentiation)
+    - [Dataset](#dataset)
+    - [Detecting dogs](#detecting-dogs)
+      - [ImageNet and ResNet](#imagenet-and-resnet)
+      - [Detecting dogs with ResNet-50](#detecting-dogs-with-resnet-50)
+    - [Detecting humans (two different approaches)](#detecting-humans-two-different-approaches)
+    - [Predicting breed](#predicting-breed)
   - [Conclusions](#conclusions)
     - [Acknowledgements](#acknowledgements)
 
@@ -127,7 +133,7 @@ For sake of keeping this repo tidy, the complete set of training/test/validation
 
 ## Main Libraries
 
-This project is built on python3, the main libraries are described here.
+This project is built on python, the main libraries are described here.
 
 - **TensorFlow**: End-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries, and community resources. https://www.tensorflow.org
 - **Keras**: Deep learning API running on top of TensorFlow. It was developed with a focus on enabling fast experimentation. https://keras.io
@@ -141,32 +147,30 @@ This project is built on python3, the main libraries are described here.
 
 ## Project Definition and Motivation
 
-This project implements state-of-the art Convolutional Neural Network (CNN) models for object classification in images. Specifically, it aims to identify dogs and estimate the breed from a provided image. We build this application to demonstrate how modern deep learning techniques have evolved to solve real-world problems historically achievable only by humans.
-
+This project implements state-of-the art Convolutional Neural Network (CNN) models for object classification in images. Specifically, it aims to predict a dog's breed from an image. We build this application to demonstrate how artificial intelligence has evolved to solve real-world problems historically achievable only by humans.
 
 The final product can be divided into two sections:
 
 - A front-end user interface providing a simple workflow for the a user to upload an image.
 - An python back-end which implements machine learning algorithms, making all computations available to the frontend through a RESTful API.
 
-Limits:
-
-Even though our main purpose is that of breed identification for the human's best friend, we let the our implementation apply prediction directly to human faces as well. We expand then our algorithm to perform human face identification, adding an amusing functionality to the user's experience.
-
-Having set up the limits of our problem we can split our detection challenge into three main tasks
-
-1. Object detection for dogs.
-2. Object detection for humans (or human faces).
-3. Object detection for dog breed. 
-
-Motivation:
+### Motivation:
 
 Artificial vision have fascinated humans for millennia. Throughout history, we have dreamed of artificial forms that are capable of making autonomous decisions and drastically increase our productivity. 
 
 Up until contemporary history, visual object identification has been something that only intelligent life has been capable of doing. The human interest for vision systems continue today and have lead to an incredible research and advancement since the 60's [1]. From autonomous driving to security applications, computer vision has become a key field of artificial intelligence. 
 
-This project aims to demonstrate state-of-the-art techniques in computer vision. Applying modern models into a common-life task. Dog breed identification is difficult even in some cases for humans. We will see how computers are able to tackle this problem in a programmatically and objective way.
+This project aims to demonstrate state-of-the-art techniques in computer vision. Applying modern models into a common-life task. Dog breed identification is difficult even in some cases for humans. We will see how computers are able to tackle the challenge in a programmatically and objective way.
 
+### Project scope:
+
+Even though our main purpose is that of breed identification for the human's best friend, we let our implementation do performs its breed prediction to human faces as well. This means that our our algorithm must be expanded in order to perform human face identification, adding an amusing functionality to the user's experience.
+
+Having set up these limits we can split our detection challenge into three **detection tasks**:
+
+1. Object detection for dogs.
+2. Object detection for humans (or human faces).
+3. Object detection for dog breed.
 
 ## Analysis
 
@@ -174,65 +178,91 @@ Object detection is a common computer vision task. As the name implies, the task
 
 ### Deep Learning
 
-To answer the question *what objects are where*, a computational model needs to run through pixels of an image in order to identify any patterns or "features". The extracted features allow the model to hypothesize over the presence of an object. We might call each extraction step as a single transformation. These transformations might also come in the form of image processing, such as color mapping and scaling.
+To answer the question *what objects are where*, a computational model needs to run through the data (image) and identify patterns or "features". The extracted features allow the model to hypothesize over the presence of an object. We might call each extraction step a transformation. These transformations might also exist in the form of image processing steps, such as color mapping or scaling.
 
-To achieve complex object detection, these computational models attempt to create high-level abstractions, using architectures that support multiple and iterative transformations. This particular approach is known as **Deep Learning**, characterized by a layered and often non-linear architecture.
+To achieve complex object detection, these computational models attempt to create high-level abstractions using architectures that support multiple and iterative transformations. This particular approach is known as **Deep Learning**, characterized by a layered and often non-linear architecture.
 
-In this context, each detection task needed for our final project will need an algorithm performing a specific model. For instance, the model detecting a human's face will be different from the model that infers dog breed.
+In the context of this project, each detection task will use a specific prediction model. For instance, the model detecting a human's face will be different from the model that infers dog breed.
 
 ### **Dog vs Human differentiation**
 
-We implement two different models in order to infer whether we are looking into a dogs or a human faces. Since our main subject is the former, we look for dogs first and fallback to human detection only if necessary. Dog-human identification will be mutually exclusive for sake of simplicity.
+We implement two different models in order to infer whether we are looking into a dog's or a human's face. Since our main subject is the former, we look for dogs first and fallback to human detection only if necessary. Dog-human identification will be mutually exclusive for sake of simplicity. That is, we will not be handling multiple simultaneous object detection for one image. 
 
 ### Dataset
-Deep learning models are characterized by their need for very large datasets to be trained and tested with. 
+Deep learning models are characterized by their need for very large datasets to be trained with. 
 In addition, data (images in this case) must be expressed in matrix or tensor forms.
 
-We provide our datasets for human and dogs detection
+Our datasets for human and dogs detection are available here:
 
   - [dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
   - [human dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip)
 
-#### Detecting dogs
-In order to fullfil the main case of our app, we need to ensure that a dog exists in the image. To achieve this, we will leverage existing models.
+### Detecting dogs
+To fullfil the main case of our application, we need to start by ensuring that a dog exists in the image. We will leverage existing projects and deep learning models described in the next section. Since this is an image problem, it makes sense that we go por spatial convolution techniques.
 
-##### ImageNet and ResNet
+#### ImageNet and ResNet
 
-ImageNet is an incredible effort to provide researchers around the world with image data for training large-scale object detection models. The project compiles over 1.2 million images from the public domain. In a very expensive labeling effort, images are organized into 1000 categories according to the WordNet hierarchy. 
+[ImageNet [2]](https://www.image-net.org/) is an incredible effort to provide researchers around the world with image data for training large-scale object detection models. The project compiles over 1.2 million images from the public domain. In a very expensive labeling effort, images are organized into 1000 categories that represent objects that we encounter in our day-to-day life. Such as vehicles, household objects, and animals.
 
-https://www.image-net.org/
+However, when referring to ImageNet, we often refer to their annual ImageNet Large Scale Visual Recognition Challenge (ILSVRC). A challenge that serve as a benchmark (and has motivated) some of most sophisticated object detection algorithms to date.
 
-CITE 
-Olga Russakovsky*, Jia Deng*, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, Alexander C. Berg and Li Fei-Fei. (* = equal contribution) ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015. paper | bibtex | paper content on arxiv | attribute annotations
+Out of the [1000 labels](https://gist.github.com/yrevar/942d3a0ac09ec9e5eb3a) used in ImageNet, 133 correspond to breeds of dogs. This makes ImageNet classification scope ideal for our project.
 
-However, when referring to ImageNet, we often refer to their annual ImageNet Large Scale Visual Recognition Challenge (ILSVRC). A challenge that serve as a benchmark (and have motivated) some of most sophisticated object detection algorithms to date.
+Various models have been benchmarked against the ImageNet challenge. To mention some:
 
-Out of the [1000 labels](https://gist.github.com/yrevar/942d3a0ac09ec9e5eb3a) used in ImageNet, 133 correspond to breeds of dogs. This makes ImageNet baseline ideal for our project. 
+- VGG16 and VGG19 CITE Simonyan and Zisserman in their 2014 paper, Very Deep Convolutional Networks for Large Scale Image Recognition. (https://arxiv.org/abs/1409.1556)
+- ResNet [] CITE He et al. Deep Residual Learning for Image Recognition (https://doi.org/10.48550/arXiv.1512.03385))
+- Inception V3 CITE Szegedy, Christian1, Liu, Wei2, Jia, Yangqing3 et al. Going Deeper with Convolutions
+  (https://doi.org/10.48550/arXiv.1409.4842)
+- Xception CITE Francois Chollet Xception: Deep Learning with Depthwise Separable Convolutions (https://arxiv.org/abs/1610.02357)
 
-#### ResNet-50
+ResNet-50 stands for Residual Network and is a type of convolutional neural network (CNN). The model, presented in 2015, demonstrated extremely deep networks for its time (50 layers). The particularity of ResNet resides on its architecture, where the main architecture is composed by a collection of micro-architectures. Due to its popularity, ResNet models are now conveniently included in the Keras python library.
 
-The resnet 50 model ...
+#### Detecting dogs with ResNet-50
 
+We implement ResNet-50 to answer our first question *Is there a dog in the picture ?*. By running the complete base model (original layers as specified in the 2015's paper) and by passing the ImageNet weights, we let the model predict the existence of dogs in our images.
 
+An initial sample check on 100 images yielded the results: 
 
+- On a 100 image dataset containing only humans, the model predicted 0 humans.
+- On a 100 image dataset containing dogs, the model predicted 100% dogs.
 
+These are very good results and demonstrate the accuracy of this model (see notebook for more details).
 
+### Detecting humans (two different approaches)
 
-#### Detecting humans
+If a dog is not detected, our main algorithm will attempt to find a human face. We explored two different methods for human face detection included in [Dlib's python library](http://dlib.net/) [4] : Histogram of Oriented Gradients (HOG) and the more powerful convolutional neural detector (MMOD-CNN) [5].
 
+By running the same check on our test set, we obtain the following results:
 
-We start by defining whether our image contains a dog or not. Dog's detection is done by implementing the pre-trained Resnet50 model. This model has been trained on [ImageNet](http://www.image-net.org/), a very large, very popular dataset used for image classification and other vision tasks.
+- On a 100 image dataset containing only humans
+  - HOG detected 99%
+  - MMOD-CNN detected 100%
+  
+- On a 100 image dataset containing dogs, the model predicted 100% dogs.
+  - HOG detected 8%
+  - MMOD-CNN detected 2%
 
-If a dog is not detected, the algorithm attempts to find a human face. This is done by using dlib's mmod cnn model, a fairly accurate model for front-facing images. (Alternatively, the hog-svm model is used for faster results.)
+Histogram of Oriented Gradients (HOG) appears to have very efficient computation time. Furthermore, it seems to be more accurate than Haar-like models when finding human faces (99% vs 97%). Again, the results where very close, but slightly better in the dog dataset. Convolutional Neural Network MMOD had a 100% detection rate for human pictures. However, the computational times are very high and might not suitable for our application. 
 
-#### **Dog's breed prediction**
-The implementation builds upon the [Xception model](https://arxiv.org/abs/1610.02357) (CVPR 2017). By using Xception as a base model, we can leverage it's pre-trained features on our particular problem. 
+Due to the lower priority for human detection in our project context, we accept the error level of the Histogram of Oriented Gradients and choose it for its fast implementation. 
 
-#### **Imagenet**
-ImageNet contains over 10 million URLs, each linking to an image containing an object from one of 1000 categories. Given an image, this pre-trained ResNet-50 model returns a prediction (derived from the available categories in ImageNet) for the object that is contained in the image.
+### Predicting breed
+To perform our main prediction task we will build upon another popular convolutional neural network known for its higher accuracy results on the ImageNet dataset. The [Xception model](https://arxiv.org/abs/1610.02357)[6].
+By using Xception as a base model, we can leverage it's pre-trained features on our particular breed detection problem. 
+
+To predict only dog's breed, the Xception model is to be adjusted to work only with dog breeds. In a demonstration of transfer learning, we make use of Xception's pre-trained model by importing only the base layers and then construct the top layers on it. In other words, the final layers will be tailored to our particular project, while taking full advantage of the pre-trained model. 
+
+Since we already have a pre-processed set of Dog bottleneck features for Xception, we add two top layers : A global spatial average pooling layer. A fully connected layer designed to distinguish between the 133 breeds. After some trials, we concluded that the model's accuracy does not improve substantially after 10 epochs. When testing against our validation set, we attained an accuracy of 85%. 
 
 
 ## Conclusions
+
+Explored two very different methods HOG and CNN
+In CNN we applied 3 different models
+Demonstrated Transfer Learning
+uUse-case matters!, choose your model wisely (speed vs accuracy)
+Accuracy of final prediction might be as well better than the human eye!
 
 ### Acknowledgements
 
@@ -241,4 +271,11 @@ ImageNet contains over 10 million URLs, each linking to an image containing an o
 	MIT Press, 1965.
 
 
+  [2] Olga Russakovsky*, Jia Deng*, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, Alexander C. Berg and Li Fei-Fei. (* = equal contribution) ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015. paper | bibtex | paper content on arxiv | attribute annotations
 
+  [3] resnet
+
+  [4] DLIB Davis E. King. Dlib-ml: A Machine Learning Toolkit. 
+   Journal of Machine Learning Research, 2009
+  
+  [5] Max-Margin Object Detection by Davis E. King. https://arxiv.org/abs/1502.00046, 2015
