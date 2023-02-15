@@ -11,8 +11,8 @@ TODO
   - [x] Explain files/structure of the repository
   - [x] Acknowledge main libraries used, 
   - [ ] Details
-    - [ ] 1. Project Definition, 
-      - [ ] 1.1 Motivation for the project
+    - [x] 1. Project Definition, 
+      - [x] 1.1 Motivation for the project
     - [ ] 2. Analysis
       - [ ] 2.2 a summary of the results of the analysis, 
     - [ ] 3. Conclusion.
@@ -115,7 +115,9 @@ The project follows a simple structure. All necessary files to run the applicati
         ├───dog_app.html    # Project notebook in rendered html format.
         └───dog_app.ipynb   # Project notebook in jupyter format.
 
-**Please note that no dependencies are included to reproduce the jupyter notebook (.ipynb). For notebook reproducibility please refer to the [original repo](https://github.com/udacity/dog-project).
+**Please note that no dependencies are included to reproduce the jupyter notebook (.ipynb). For notebook reproducibility please refer to the [original repo](https://github.com/udacity/dog-project). 
+
+Alternatively, the html notebook can be viewed [here](https://nbviewer.org/github/sbadillo/neural-networks-dogbreed/blob/master/notebook/dog_app.html).
 
 For sake of keeping this repo tidy, the complete set of training/test/validation images used in training are NOT provided in this repository. As these are not necessary in runtime and are openly available in the [original project](https://github.com/udacity/dog-project) repository : 
 
@@ -139,16 +141,17 @@ This project is built on python3, the main libraries are described here.
 
 ## Project Definition and Motivation
 
-This project implements state-of-the art Convolutional Neural Network (CNN) models for object classification in images. Specifically, it aims to identify dogs and estimate the breed from a provided image. We build this application to demonstrate how modern deep learning techniques have evolved to solve common problems historically doable only by humans.
+This project implements state-of-the art Convolutional Neural Network (CNN) models for object classification in images. Specifically, it aims to identify dogs and estimate the breed from a provided image. We build this application to demonstrate how modern deep learning techniques have evolved to solve real-world problems historically achievable only by humans.
 
 
 The final product can be divided into two sections:
+
 - A front-end user interface providing a simple workflow for the a user to upload an image.
 - An python back-end which implements machine learning algorithms, making all computations available to the frontend through a RESTful API.
 
 Limits:
 
-Even though our main purpose is that of breed identification **human's best friend**, we let the our implementation apply prediction directly to human faces as well. We expand then our algorithm to perform human face identification, adding a rather odd, but amusing twist to the user's experience.
+Even though our main purpose is that of breed identification for the human's best friend, we let the our implementation apply prediction directly to human faces as well. We expand then our algorithm to perform human face identification, adding an amusing functionality to the user's experience.
 
 Having set up the limits of our problem we can split our detection challenge into three main tasks
 
@@ -162,25 +165,59 @@ Artificial vision have fascinated humans for millennia. Throughout history, we h
 
 Up until contemporary history, visual object identification has been something that only intelligent life has been capable of doing. The human interest for vision systems continue today and have lead to an incredible research and advancement since the 60's [1]. From autonomous driving to security applications, computer vision has become a key field of artificial intelligence. 
 
-This project aims to demonstrate state-of-the-art techniques in computer vision. Applying modern models into a common-life task. Dog breed identification is difficult even in some cases for humans. We will see how computers are able to tackle this problem in a programatically and objective way.
+This project aims to demonstrate state-of-the-art techniques in computer vision. Applying modern models into a common-life task. Dog breed identification is difficult even in some cases for humans. We will see how computers are able to tackle this problem in a programmatically and objective way.
 
 
 ## Analysis
 
 Object detection is a common computer vision task. As the name implies, the task is to identify instances of objects in digital images (or video frames). 
 
-Deep Learning
+### Deep Learning
+
 To answer the question *what objects are where*, a computational model needs to run through pixels of an image in order to identify any patterns or "features". The extracted features allow the model to hypothesize over the presence of an object. We might call each extraction step as a single transformation. These transformations might also come in the form of image processing, such as color mapping and scaling.
 
 To achieve complex object detection, these computational models attempt to create high-level abstractions, using architectures that support multiple and iterative transformations. This particular approach is known as **Deep Learning**, characterized by a layered and often non-linear architecture.
 
-Data (images) must be expressed in matrix or tensor forms.
+In this context, each detection task needed for our final project will need an algorithm performing a specific model. For instance, the model detecting a human's face will be different from the model that infers dog breed.
+
+### **Dog vs Human differentiation**
+
+We implement two different models in order to infer whether we are looking into a dogs or a human faces. Since our main subject is the former, we look for dogs first and fallback to human detection only if necessary. Dog-human identification will be mutually exclusive for sake of simplicity.
+
+### Dataset
+Deep learning models are characterized by their need for very large datasets to be trained and tested with. 
+In addition, data (images in this case) must be expressed in matrix or tensor forms.
+
+We provide our datasets for human and dogs detection
+
+  - [dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
+  - [human dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip)
+
+#### Detecting dogs
+In order to fullfil the main case of our app, we need to ensure that a dog exists in the image. To achieve this, we will leverage existing models.
+
+##### ImageNet and ResNet
+
+ImageNet is an incredible effort to provide researchers around the world with image data for training large-scale object detection models. The project compiles over 1.2 million images from the public domain. In a very expensive labeling effort, images are organized into 1000 categories according to the WordNet hierarchy. 
+
+https://www.image-net.org/
+
+CITE 
+Olga Russakovsky*, Jia Deng*, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, Alexander C. Berg and Li Fei-Fei. (* = equal contribution) ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015. paper | bibtex | paper content on arxiv | attribute annotations
+
+However, when referring to ImageNet, we often refer to their annual ImageNet Large Scale Visual Recognition Challenge (ILSVRC). A challenge that serve as a benchmark (and have motivated) some of most sophisticated object detection algorithms to date.
+
+#### ResNet-50
+
+The resnet 50
 
 
 
-### Machine Learning techniques
 
-#### **Dog vs Human differentiation**
+
+
+#### Detecting humans
+
 
 We start by defining whether our image contains a dog or not. Dog's detection is done by implementing the pre-trained Resnet50 model. This model has been trained on [ImageNet](http://www.image-net.org/), a very large, very popular dataset used for image classification and other vision tasks.
 
