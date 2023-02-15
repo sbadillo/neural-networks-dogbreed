@@ -1,22 +1,24 @@
 TODO
 
-- [ ] Web Application
+- [x] Web Application
 	- [x]  There is a web application that utilizes data to inform how the web application works.
-- [ ] Code
-  - [ ] Code is formatted neatly with comments and uses DRY principles.
+  - [x] Code
+    - [x] Code is formatted neatly with comments and uses DRY principles.
+    - [x] reproducibility and environment.yml file
 - [ ] README.md file that communicates : 
   - [ ] TOC (updated)
-  - [x] the libraries used, 
-  - [x] the files in the repository with a small description of each, 
-  - [ ] and necessary acknowledgements.
-  - [x] Instruction to run the application on a local.
-  - [ ] 1. Project Definition, 
-    - [ ] 1.1 Motivation for the project
-  - [ ] 2. Analysis
-    - [ ] 2.2 a summary of the results of the analysis, 
-  - [ ] 3. Conclusion.
-  - [ ] Aknowledgements.
-- [ ] Git repository and submission
+  - [x] Instruction to run app.
+  - [x] Explain files/structure of the repository
+  - [x] Acknowledge main libraries used, 
+  - [ ] Details
+    - [ ] 1. Project Definition, 
+      - [ ] 1.1 Motivation for the project
+    - [ ] 2. Analysis
+      - [ ] 2.2 a summary of the results of the analysis, 
+    - [ ] 3. Conclusion.
+    - [ ] Acknowledgements.
+- [x] Git repository init
+- [ ] submit
 
 ---
 
@@ -24,11 +26,12 @@ TODO
 
 - [Introduction](#introduction)
   - [User interface](#user-interface)
-  - [Prediction algorithms](#prediction-algorithms)
-- [Quickstart](#quickstart)
+  - [Finding dog's breed with artificial intelligence](#finding-dogs-breed-with-artificial-intelligence)
+- [Quick start](#quick-start)
   - [Installation](#installation)
   - [Running the app](#running-the-app)
 - [Project Structure and Libraries](#project-structure-and-libraries)
+  - [Main Libraries](#main-libraries)
 - [Details](#details)
   - [Project Definition and Motivation](#project-definition-and-motivation)
   - [Analysis](#analysis)
@@ -37,7 +40,8 @@ TODO
       - [**Dog's breed prediction**](#dogs-breed-prediction)
       - [**Imagenet**](#imagenet)
   - [Conclusions](#conclusions)
-    - [Aknowledgements](#aknowledgements)
+    - [Acknowledgements](#acknowledgements)
+
 
 # Introduction
 
@@ -50,23 +54,27 @@ The web app follows this simple user story:
 
 * User uploads an image to the main page.
 * if a dog is detected in the image, we display the predicted breed.
-* if a human is detected in the image, we return the resembling dog breed.
-* if neither is detected in the image, provide output that indicates an error and some suggestions.
+* for comparison, the results page provides some examples of the training set.
+* as a fun twist, if a human is detected in the image, we return the resembling dog breed.
+* if neither is detected in the image, we provide an error and some suggestions.
 
-## Prediction algorithms
-The project's backend demonstrates the concept of [**Transfer Learning**](https://en.wikipedia.org/wiki/Transfer_learning) by leveraging existing models and building on top of pre-trained **convolutional neural networks**. These models are used to identify dogs or humans, and later to predict a dog's breed.
+## Finding dog's breed with artificial intelligence
+The project's backend demonstrates the concept of [**Transfer Learning**](https://en.wikipedia.org/wiki/Transfer_learning) by leveraging existing models and building on top of pre-trained **convolutional neural networks**. These models are used to identify dogs or humans, and later to predict the dog's breed.
 
 
-# Quickstart
+# Quick start
+
 ## Installation
-Clone this repository, then cd into it
+Clone this repository, then navigate into it
 
     $ git clone https://github.com/sbadillo/neural-networks-dogbreed.git
     $ cd neural-networks-dogbreed
 
 It is recommended to set-up a python virtual environment using the `conda` package manager from the Anaconda distribution ([available here](https://www.anaconda.com/products/distribution)).
 
-Run this command from a conda-enabled shell. This will create a new environment called **`dog-env`** and install all dependencies.
+Run this command from a conda-enabled shell. This will create a new environment called **`dog-env`** and install all dependencies. Alternatively, you can install the [packages manually](/environment.yml).
+
+    ## note: this command might take a minute or two.
 
     $ conda env create -f environment.yml
 
@@ -74,9 +82,10 @@ Activate the newly created `dog-env` environment
 
     $ conda activate dog-env
 
+
 ## Running the app
 
-To start the web app in production, navigate to the /app directory and run the main app run.py
+To start the web app in production, navigate to the `/app` directory and start the main app `run.py`
 
     $ cd app
     $ python run.py
@@ -90,34 +99,91 @@ That's it! The app should be up and running. Open your browser and navigate to h
 
 (Or http://127.0.0.1:5000 if running the debug server).
 
+
 # Project Structure and Libraries
-The project follows a simple structure. All necessary files to run the web server are found in the `app/` directory. For more insight into the thought process of the project go to the `notebook/` directory.
+The project follows a simple structure. All necessary files to run the application are found in the `app/` directory. For more insight into the thought process of the project go to the `notebook/` directory.
 
     neural-networks-dogbreed
     ├───app/
-    │   ├───run.py          # Main application that launches the web server.
-    │   ├───predict.py      # Module containing prediction functions called by run.py.
+    │   ├───run.py          # Main application module.
+    │   ├───predict.py      # Module containing prediction functions.
     │   ├───models/         # Contains pre-trained model files and weight files.
     │   ├───static/         # Static assets for our web app: images and CSS.
     │   ├───templates/      # html templates of our index and results pages.
     │   └───uploads/        # holds the user's uploaded image during runtime
-    └───notebook/
-        ├───dog_app.html    # Project notebook
-        └───dog_app.ipynb   # Project notebook (jupyter file)
+    └───notebook**/
+        ├───dog_app.html    # Project notebook in rendered html format.
+        └───dog_app.ipynb   # Project notebook in jupyter format.
 
-This project is built in python3, the main libraries used are described below:
+**Please note that no dependencies are included to reproduce the jupyter notebook (.ipynb). For notebook reproducibility please refer to the [original repo](https://github.com/udacity/dog-project).
 
-- **TensorFlow**: end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries, and community resources. https://www.tensorflow.org/
-- **Keras**: deep learning API running on top of TensorFlow. It was developed with a focus on enabling fast experimentation. https://keras.io/
-- **Dlib**: toolkit containing machine learning algorithms http://dlib.net/
-- **Open-CV**: Open Source Computer Vision Library. Includes several hundreds of computer vision algorithms and image processing functionality. https://opencv.org/
-- **Numpy**: fundamental package for numerical computing with Python. https://numpy.org/
-- **Flask**: lightweight framework for building web applications. https://flask.palletsprojects.com/
+For sake of keeping this repo tidy, the complete set of training/test/validation images used in training are NOT provided in this repository. As these are not necessary in runtime and are openly available in the [original project](https://github.com/udacity/dog-project) repository : 
+
+  - [dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
+  - [human dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip)
+
+
+## Main Libraries
+
+This project is built on python3, the main libraries are described here.
+
+- **TensorFlow**: End-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries, and community resources. https://www.tensorflow.org
+- **Keras**: Deep learning API running on top of TensorFlow. It was developed with a focus on enabling fast experimentation. https://keras.io
+- **Dlib**: Toolkit containing machine learning algorithms http://dlib.net
+- **Open-CV**: Open Source Computer Vision Library. Includes several hundreds of computer vision algorithms and image processing functionality. https://opencv.org
+- **Numpy**: Fundamental package for numerical computing with Python. https://numpy.org
+- **Flask**: Lightweight framework for building web applications in python. https://flask.palletsprojects.com
 - **Waitress**: production-quality pure-Python WSGI server with "very acceptable" performance. https://github.com/Pylons/waitress
 
 # Details
 
 ## Project Definition and Motivation
+
+This project implements state-of-the art Convolutional Neural Network (CNN) models for object classification in images. Specifically, it aims to identify dogs and estimate the breed from a provided image.
+
+The final product consists of two blocks:
+- A front-end user interface providing a simple workflow for the a user to upload an image.
+- An python back-end which implements machine learning algorithms, making all computations available to the frontend through a RESTful API.
+
+Limits:
+
+Even though our main purpose is that of breed identification for the human's best friend, we let the our implementation apply prediction directly to human faces as well. We expand then our algorithm to perform human face identification, adding a rather odd, but amusing twist to the user's experience.
+
+Having set up the limits of our problem we can split our detection section into three tasks
+
+1. Object detection for dogs.
+2. Object detection for humans (or human faces).
+3. Object detection specific for dogs breed. 
+
+Motivation:
+
+Artificial vision have fascinated humans for millennia. Throughout history, we have dreamed of artificial forms that are capable of making autonomous decisions and drastically increase our productivity. 
+
+Up until contemporary history, visual object identification has been something that only intelligent life has been capable of doing. The human interest for vision systems continue today and have lead to an incredible research and advancement since the 60's. From autonomous driving to security applications, computer vision has become a key field of artificial intelligence. 
+
+    The earliest applications were pattern recognition systems for character recognition in office automation related tasks [2, 3].
+    [2] L. G. Roberts, Pattern Recognition With An Adaptive Network, in: Proc. IRE International Convention Record, 66–70, 1960.
+    [3] J. T. Tippett, D. A. Borkowitz, L. C. Clapp, C. J. Koester, A. J. Vanderburgh (Eds.), Optical and Electro-Optical Information Processing,
+    MIT Press, 1965.
+
+
+Object detection is a common computer vision task. As the name implies, the task is to identify instances of objects in digital images (or video frames).  
+
+Deep Learning
+To answer the question *what objects are where*, a computational model needs to run through the pixels of an image in order to identify and group patterns or "features". The extracted features allow the model to hypothesize over the presence of an object.
+
+To achieve complex object detection, these algorithms attempt to create high-level abstractions in data (images), using architectures that support multiple and iterative transformations. We define this particular approach and algorithms as **Deep Learning**, characterized by their layered and often non-linear architecture.
+
+Data (images) must be expressed in matrix or tensor forms.
+
+
+
+
+The whole logic is often assembled in layers and it is common to mix in other techniques such as image processing.
+
+
+, such as 
+We explore modern deep learning techniques to solve common problems historically only doable for humans: Identifying a canine's breed.
 
 ## Analysis
 
@@ -127,7 +193,7 @@ This project is built in python3, the main libraries used are described below:
 
 We start by defining whether our image contains a dog or not. Dog's detection is done by implementing the pre-trained Resnet50 model. This model has been trained on [ImageNet](http://www.image-net.org/), a very large, very popular dataset used for image classification and other vision tasks.
 
-If a dog is not detected, the algoritm attemps to find a human face. This is done by using dlib's mmod cnn model, a fairly accurate model for front-facing images. (Alternatively, the hog-svm model is used for faster results.)
+If a dog is not detected, the algorithm attempts to find a human face. This is done by using dlib's mmod cnn model, a fairly accurate model for front-facing images. (Alternatively, the hog-svm model is used for faster results.)
 
 #### **Dog's breed prediction**
 The implementation builds upon the [Xception model](https://arxiv.org/abs/1610.02357) (CVPR 2017). By using Xception as a base model, we can leverage it's pre-trained features on our particular problem. 
@@ -138,7 +204,7 @@ ImageNet contains over 10 million URLs, each linking to an image containing an o
 
 ## Conclusions
 
-### Aknowledgements
+### Acknowledgements
 
 
 
