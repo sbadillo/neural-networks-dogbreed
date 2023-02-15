@@ -9,8 +9,8 @@
 - [Project Structure](#project-structure)
     - [Libraries used](#libraries-used)
 - [Project Definition and Motivation](#project-definition-and-motivation)
-  - [Motivation:](#motivation)
-  - [Project scope:](#project-scope)
+  - [Motivation](#motivation)
+  - [Project scope](#project-scope)
 - [Analysis](#analysis)
   - [Deep Learning](#deep-learning)
     - [Dog vs Human differentiation](#dog-vs-human-differentiation)
@@ -21,22 +21,27 @@
   - [Detecting humans (two different approaches)](#detecting-humans-two-different-approaches)
   - [Predicting breed with Xception](#predicting-breed-with-xception)
 - [Conclusions](#conclusions)
+- [References](#references)
 
+&nbsp;
 
 # Introduction
 
 An application that predicts a dog's breed from a user-provided image by using artificial neural networks.
 
-![Capture](capture2.gif)
+<p align="center">
+  <img width="320" src="capture2.gif" style="border: solid lightgray 5px; margin : 20px 0px">
+</p>
 
-###  User interface
+### User interface
+
 The web app follows this simple user story: 
 
-* User uploads an image to the main page.
-* if a dog is detected in the image, we display the predicted breed.
-* for comparison, the results page provides some examples of the training set.
-* as a fun twist, if a human is detected in the image, we return the resembling dog breed.
-* if neither is detected in the image, we provide an error and some suggestions.
+- User uploads an image to the main page.
+- if a dog is detected in the image, we display the predicted breed.
+- for comparison, the results page provides some examples of the training set.
+- as a fun twist, if a human is detected in the image, we return the resembling dog breed.
+- if neither is detected in the image, we provide an error and some suggestions.
 
 ### Transfer Learning and CNN
 
@@ -44,11 +49,10 @@ The backend demonstrates the concept of [**Transfer Learning**](https://en.wikip
 
 &nbsp;
 
-
-
 # Quick start
 
 ### Installation
+
 Clone this repository, then navigate into it
 
     $ git clone https://github.com/sbadillo/neural-networks-dogbreed.git
@@ -72,7 +76,7 @@ To start the web app in production, navigate to the `/app` directory and start t
     $ python run.py
 
 alternatively, start a debug server with flask
-    
+
     $ cd app
     $ flask --debug --app=run.py run --host=0.0.0.0
 
@@ -83,6 +87,7 @@ That's it! The app should be up and running. Open your browser and navigate to h
 &nbsp;
 
 # Project Structure
+
 The project follows a simple structure. All necessary files to run the application are found in the `app/` directory. For more insight into the thought process of the project go to the `notebook/` directory.
 
     neural-networks-dogbreed
@@ -97,13 +102,12 @@ The project follows a simple structure. All necessary files to run the applicati
         ├───dog_app.html    # Project notebook in rendered html format.
         └───dog_app.ipynb   # Project notebook in jupyter format.
 
-**Please note that no dependencies are included to reproduce the jupyter notebook (.ipynb). For notebook reproducibility please refer to the [original repository](https://github.com/udacity/dog-project)[1]. 
+**Please note that no dependencies are included to reproduce the jupyter notebook (.ipynb). For notebook reproducibility please refer to the [original repository](https://github.com/udacity/dog-project) [1].
 
 For sake of keeping this repository tidy, the complete set of training/test/validation images used in training are NOT provided in this repository. As these are not necessary in runtime and are openly available in the [original project](https://github.com/udacity/dog-project) repository : 
 
-  - [dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
-  - [human dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip)
-
+- [dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
+- [human dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip)
 
 ### Libraries used
 
@@ -128,7 +132,7 @@ The final product can be divided into two sections:
 - A front-end user interface providing a simple workflow for the a user to upload an image.
 - An python back-end which implements machine learning algorithms, making all computations available to the frontend through a RESTful API.
 
-## Motivation:
+## Motivation
 
 Artificial vision have fascinated humans for millennia. Throughout history, we have dreamed of artificial forms that are capable of making autonomous decisions and drastically increase our productivity. 
 
@@ -136,7 +140,7 @@ Up until contemporary history, visual object identification has been something t
 
 This project aims to demonstrate state-of-the-art techniques in computer vision. Applying modern models into a common-life task. Dog breed identification is difficult even in some cases for humans. We will see how computers are able to tackle the challenge in a programmatically and objective way.
 
-## Project scope:
+## Project scope
 
 Even though our main purpose is that of breed identification for the human's best friend, we let our implementation do performs its breed prediction to human faces as well. This means that our our algorithm must be expanded in order to perform human face identification, adding an amusing functionality to the user's experience.
 
@@ -164,16 +168,18 @@ In the context of this project, each detection task will use a specific predicti
 
 We implement two different models in order to infer whether we are looking into a dog's or a human's face. Since our main subject is the former, we look for dogs first and fallback to human detection only if necessary. Dog-human identification will be mutually exclusive for sake of simplicity. That is, we will not be handling multiple simultaneous object detection for one image. 
 
-### Data 
-Deep learning models are characterized by their need for very large datasets to be trained with. 
+### Data
+
+Deep learning models are characterized by their need for very large datasets to be trained with.
 In addition, data (images in this case) must be expressed in matrix or tensor forms.
 
 Our datasets for human and dogs detection are available here:
 
-  - [dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
-  - [human dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip)
+- [dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
+- [human dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip)
 
 ## Detecting dogs
+
 To fullfil the main case of our application, we need to start by ensuring that a dog exists in the image. We will leverage existing projects and deep learning models described in the next section. Since this is an image problem, it makes sense that we go por spatial convolution techniques.
 
 ### ImageNet and ResNet
@@ -243,10 +249,7 @@ Two state-of-the-art convolutional neural network architectures where explored f
 
 &nbsp;
 
----
-&nbsp;
-
-**References**
+# References
 
 [1] [Udacity project repository](https://github.com/udacity/dog-project). Udacity.com. 2022.
 
