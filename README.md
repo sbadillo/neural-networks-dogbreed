@@ -13,11 +13,12 @@ TODO
   - [ ] Details
     - [x] 1. Project Definition, 
       - [x] 1.1 Motivation for the project
-    - [ ] 2. Analysis
-      - [ ] 2.2 a summary of the results of the analysis, 
+    - [x] 2. Analysis
     - [ ] 3. Conclusion.
     - [ ] Acknowledgements.
 - [x] Git repository init
+- [ ] problem with notebook final test
+- [ ] RE-read
 - [ ] submit
 
 ---
@@ -258,6 +259,7 @@ Since we already have a pre-processed set of Dog bottleneck features for Xceptio
 
 ## Conclusions
 
+DRAFT
 Explored two very different methods HOG and CNN
 In CNN we applied 3 different models
 Demonstrated Transfer Learning
