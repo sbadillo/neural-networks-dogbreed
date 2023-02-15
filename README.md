@@ -207,9 +207,11 @@ Olga Russakovsky*, Jia Deng*, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma
 
 However, when referring to ImageNet, we often refer to their annual ImageNet Large Scale Visual Recognition Challenge (ILSVRC). A challenge that serve as a benchmark (and have motivated) some of most sophisticated object detection algorithms to date.
 
+Out of the [1000 labels](https://gist.github.com/yrevar/942d3a0ac09ec9e5eb3a) used in ImageNet, 133 correspond to breeds of dogs. This makes ImageNet baseline ideal for our project. 
+
 #### ResNet-50
 
-The resnet 50
+The resnet 50 model ...
 
 
 
