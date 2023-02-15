@@ -17,7 +17,9 @@ TODO
     - [ ] 3. Conclusion.
     - [ ] Acknowledgements.
 - [x] Git repository init
-- [ ] problem with notebook final test
+- [x] fix problem with notebook final - 
+- [ ] flush nbviewer cache or retire link in README.md
+- [ ] complete citations
 - [ ] RE-read
 - [ ] submit
 
@@ -124,7 +126,7 @@ The project follows a simple structure. All necessary files to run the applicati
 
 **Please note that no dependencies are included to reproduce the jupyter notebook (.ipynb). For notebook reproducibility please refer to the [original repo](https://github.com/udacity/dog-project). 
 
-Alternatively, the html notebook can be viewed [here](https://nbviewer.org/github/sbadillo/neural-networks-dogbreed/blob/master/notebook/dog_app.html).
+For convenience, the notebook can be viewed [here](https://nbviewer.org/github/sbadillo/neural-networks-dogbreed/blob/master/notebook/dog_app.ipynb).
 
 For sake of keeping this repo tidy, the complete set of training/test/validation images used in training are NOT provided in this repository. As these are not necessary in runtime and are openly available in the [original project](https://github.com/udacity/dog-project) repository : 
 
