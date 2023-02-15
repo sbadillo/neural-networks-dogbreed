@@ -30,6 +30,12 @@
 An application that predicts a dog's breed from a user-provided image by using artificial neural networks.
 
 <p align="center">
+  <img width="320" src="capture3.gif" style="border: solid lightgray 5px; margin : 20px 0px">
+</p>
+
+or for humans ..
+
+<p align="center">
   <img width="320" src="capture2.gif" style="border: solid lightgray 5px; margin : 20px 0px">
 </p>
 

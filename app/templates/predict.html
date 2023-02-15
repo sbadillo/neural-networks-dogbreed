@@ -52,11 +52,11 @@
     <div class="row justify-content-md-center pt-4">
 
         {% if is_dog %}
-        <h2><img class="img-fluid w-25 p-2" src="/static/doggo.png" alt="">Looks like a <mark>{{ breed.replace("_", " ")
+        <h2><img class="img-fluid w-25 p-2" src="/static/doggo.png" alt="">Looks like a(n) <mark>{{ breed.replace("_", " ")
             }}!</mark></h2>
         {% endif %}
         {% if is_human %}
-        <h2><img class="img-fluid w-25 p-2" src="/static/doggo.png" alt="">Anyway ! looks like a <mark>{{
+        <h2><img class="img-fluid w-25 p-2" src="/static/doggo.png" alt="">Anyway ! looks like a(n) <mark>{{
             breed.replace("_", " ") }}!</mark></h2>
         {% endif %}
         {#
